@@ -1,0 +1,84 @@
+.skills-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.skills-page__search {
+  margin-bottom: 2rem;
+}
+
+.skills-page__input {
+  width: 100%;
+  max-width: 320px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background: rgba(110, 143, 175, 0.15);
+  border: 1px solid rgba(110, 143, 175, 0.4);
+  border-radius: 6px;
+}
+
+.skills-page__input::placeholder {
+  color: rgba(199, 214, 229, 0.6);
+}
+
+.skills-page__input:focus {
+  outline: none;
+  border-color: var(--company-primary, #6e8faf);
+}
+
+.skills-page__details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.skills-page__detail {
+  scroll-margin-top: 5rem;
+  padding: 1.5rem;
+  background: rgba(110, 143, 175, 0.08);
+  border-radius: 6px;
+  border-left: 4px solid var(--company-primary, #6e8faf);
+}
+
+.skills-page__detail-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 1rem 0;
+}
+
+.skills-page__detail-list {
+  margin: 0;
+}
+
+.skills-page__detail-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skills-page__detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.skills-page__detail-term {
+  font-size: 0.85rem;
+  color: rgba(199, 214, 229, 0.8);
+  margin: 0;
+}
+
+.skills-page__detail-value {
+  font-size: 0.95rem;
+  color: white;
+  margin: 0;
+}
+
+.skills-page__project {
+  color: var(--company-primary, #6e8faf);
+}
+
+.skills-page__sep {
+  color: rgba(199, 214, 229, 0.6);
+}

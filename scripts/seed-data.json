@@ -1,0 +1,154 @@
+{
+  "siteConfig": {
+    "name": "Paul Crews Jr.",
+    "headshotUrl": "hs/me_headshot.png",
+    "resumeStoragePath": "documents/Paul_Crews_Jr_Executive_Resume_Final.pdf",
+    "title": "Head of Technology & Infrastructure",
+    "positioningStatement": "Technical executive operating at the intersection of executive strategy and hands-on technical execution: owning risk, resilience, and long-term systems architecture.",
+    "strategicSummary": "Build resilient systems. Align technology with business outcomes. Create infrastructure that scales.",
+    "metrics": [
+      { "label": "Years Leadership", "value": "15+" },
+      { "label": "Uptime Architecture", "value": "99%" },
+      { "label": "Cost Reduction", "value": "30%" },
+      { "label": "Efficiency Gains", "value": "80%" }
+    ]
+  },
+  "companies": [
+    { "id": "company-1", "name": "Williamsburg Charter High School", "logoUrl": "/logos/wchs.png", "primaryColor": "#6e8faf" },
+    { "id": "company-2", "name": "Plaza Auto Mall", "logoUrl": "/logos/plaza.png", "primaryColor": "#6e8faf" },
+    { "id": "company-3", "name": "BMH Mind and Body Services", "logoUrl": "/logos/bmh.png", "primaryColor": "#6e8faf" },
+    { "id": "company-4", "name": "Generali Global Assistance", "logoUrl": "/logos/generali.png", "primaryColor": "#6e8faf" },
+    { "id": "company-5", "name": "Raj Technologies", "logoUrl": "/logos/raj.jpeg", "primaryColor": "#6e8faf" }
+  ],
+  "experiences": [
+    {
+      "companyId": "company-1",
+      "title": "Head of Technology & Infrastructure",
+      "startDate": "Dec 2022",
+      "endDate": "Present",
+      "summary": "Own enterprise technology strategy supporting 1,500 users and 3,200 managed devices across multi-site operations. Manage $125K cross-departmental budget aligning infrastructure investments with institutional priorities.",
+      "impactBullets": [
+        "Directed transition from Windows/Office 365 to MacOS and Google Chromebook infrastructure, reducing licensing costs by 30%",
+        "Upgraded legacy Server 2008 environment to cloud-based architecture achieving 99% uptime for data and identity services",
+        "Implemented MFA, Passkey authentication, and MDM governance profiles reducing device loss by 90%",
+        "Established storage retention policies decreasing cloud storage costs by 20%",
+        "Built AI-assisted Level 1 support system reducing ticket escalation and improving operational efficiency"
+      ],
+      "technologies": ["MacOS", "Google Chromebook", "Google Workspace", "MDM", "MFA", "Cloud Architecture"],
+      "order": 1
+    },
+    {
+      "companyId": "company-2",
+      "title": "Head of Technology (Interim)",
+      "startDate": "Jun 2022",
+      "endDate": "Oct 2022",
+      "summary": "Restored operational stability across 4 locations supporting 2,500 users and 6,000 devices. Managed $50K quarterly modernization budget and reported directly to CEO on infrastructure strategy.",
+      "impactBullets": [
+        "Contained active network intrusions and rebuilt security governance preventing lateral compromise",
+        "Secured VPN tunnels ensuring 100% operational access to CDK enterprise platform",
+        "Executed infrastructure migration from Windows Server 2012 to 2019 and transitioned to Google Workspace",
+        "Standardized endpoint lifecycle management and trained technical staff prior to deployment"
+      ],
+      "technologies": ["Windows Server", "Google Workspace", "VPN", "CDK"],
+      "order": 2
+    },
+    {
+      "companyId": "company-3",
+      "title": "Vice President, Information Technology",
+      "startDate": "Dec 2018",
+      "endDate": "Aug 2021",
+      "summary": "Directed HIPAA and OMH compliant infrastructure development from ground up. Negotiated vendor pricing maximizing ROI within $50K annual budget.",
+      "impactBullets": [
+        "Led full digitization of client records eliminating physical storage and saving tens of thousands annually",
+        "Reduced report retrieval time by 80% through cloud-based record architecture",
+        "Implemented automated scheduling and communication workflows improving operational efficiency",
+        "Architected secure intranet and public-facing web infrastructure"
+      ],
+      "technologies": ["HIPAA", "Cloud Architecture", "Automation", "Web Infrastructure"],
+      "order": 3
+    },
+    {
+      "companyId": "company-4",
+      "title": "IT Manager",
+      "startDate": "Sep 2010",
+      "endDate": "Jul 2018",
+      "summary": "Directed distributed team of 18 supporting enterprise infrastructure for 500 users and 4,000 devices. Owned disaster recovery and business continuity strategy implementing offsite redundancy and cloud restoration.",
+      "impactBullets": [
+        "Contained ransomware intrusion prior to lateral propagation preventing network-wide compromise",
+        "Coordinated infrastructure strategy with Italian headquarters aligning regional operations with global standards",
+        "Architected secure VPN infrastructure enabling new office expansion"
+      ],
+      "technologies": ["Disaster Recovery", "VPN", "Business Continuity", "Cloud Restoration"],
+      "order": 4
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-1",
+      "name": "MacOS & Chromebook Infrastructure Migration",
+      "companyId": "company-1",
+      "problem": "Windows/Office 365 ecosystem incurred high licensing costs and limited flexibility.",
+      "intervention": "Directed full transition to MacOS and Google Chromebook infrastructure.",
+      "architecture": "Multi-site MDM governance with cloud-based identity and data services.",
+      "outcome": "Reduced licensing costs by 30% while achieving 99% uptime.",
+      "outcomeBullets": ["30% licensing cost reduction", "99% uptime for data and identity services", "90% reduction in device loss via MFA and MDM"],
+      "stakeholders": ["Executive Leadership", "Operations", "Finance"],
+      "technologies": ["MacOS", "Google Chromebook", "MDM", "MFA"],
+      "order": 1
+    },
+    {
+      "id": "proj-2",
+      "name": "Network Intrusion Recovery & Security Governance",
+      "companyId": "company-2",
+      "problem": "Active network intrusions threatened lateral compromise across 4 locations.",
+      "intervention": "Contained intrusions and rebuilt security governance from the ground up.",
+      "architecture": "Secured VPN tunnels, endpoint lifecycle management, Windows Server 2019 migration.",
+      "outcome": "100% operational access restored; prevented lateral compromise.",
+      "outcomeBullets": ["100% VPN access to CDK platform", "Security governance rebuilt", "Windows Server 2012 to 2019 migration complete"],
+      "stakeholders": ["CEO", "Operations", "Technical Staff"],
+      "technologies": ["VPN", "Windows Server", "Google Workspace"],
+      "order": 2
+    },
+    {
+      "id": "proj-3",
+      "name": "HIPAA-Compliant Cloud Record Digitization",
+      "companyId": "company-3",
+      "problem": "Physical client records created storage costs and slow retrieval.",
+      "intervention": "Led full digitization of client records with HIPAA and OMH compliant architecture.",
+      "architecture": "Cloud-based record architecture with automated scheduling and secure web infrastructure.",
+      "outcome": "80% faster report retrieval; tens of thousands in annual savings.",
+      "outcomeBullets": ["80% reduction in report retrieval time", "Eliminated physical storage costs", "HIPAA and OMH compliant"],
+      "stakeholders": ["Clinical Leadership", "Compliance", "Operations"],
+      "technologies": ["Cloud Architecture", "HIPAA", "Automation"],
+      "order": 3
+    },
+    {
+      "id": "proj-4",
+      "name": "Disaster Recovery & Ransomware Containment",
+      "companyId": "company-4",
+      "problem": "Ransomware intrusion risk and lack of offsite redundancy.",
+      "intervention": "Contained ransomware prior to lateral propagation; implemented disaster recovery and business continuity strategy.",
+      "architecture": "Offsite redundancy, cloud restoration, secure VPN for office expansion.",
+      "outcome": "Prevented network-wide compromise; enabled scalable office expansion.",
+      "outcomeBullets": ["Ransomware contained before lateral propagation", "Offsite redundancy implemented", "Secure VPN enabled new office expansion"],
+      "stakeholders": ["Italian Headquarters", "Regional Operations", "Executive Leadership"],
+      "technologies": ["Disaster Recovery", "Business Continuity", "VPN", "Cloud Restoration"],
+      "order": 4
+    }
+  ],
+  "skills": [
+    { "id": "skill-1", "name": "Enterprise Infrastructure Strategy", "whereUsed": ["company-1", "company-2", "company-3", "company-4"], "whereLearned": "company-4", "order": 1 },
+    { "id": "skill-2", "name": "Cloud Architecture & Identity Governance", "whereUsed": ["company-1", "company-3", "company-4"], "whereLearned": "company-3", "order": 2 },
+    { "id": "skill-3", "name": "Disaster Recovery & Business Continuity", "whereUsed": ["company-4", "company-1"], "whereLearned": "company-4", "order": 3 },
+    { "id": "skill-4", "name": "Cybersecurity Risk Mitigation", "whereUsed": ["company-2", "company-4", "company-1"], "whereLearned": "company-4", "order": 4 },
+    { "id": "skill-5", "name": "Technology Transformation Leadership", "whereUsed": ["company-1", "company-2", "company-3"], "whereLearned": "company-4", "order": 5 },
+    { "id": "skill-6", "name": "Vendor & Budget Oversight", "whereUsed": ["company-1", "company-2", "company-3"], "whereLearned": "company-3", "order": 6 },
+    { "id": "skill-7", "name": "Automation & Systems Modernization", "whereUsed": ["company-1", "company-3"], "whereLearned": "company-3", "order": 7 },
+    { "id": "skill-8", "name": "Distributed Team Leadership", "whereUsed": ["company-4", "company-1"], "whereLearned": "company-4", "order": 8 },
+    { "id": "skill-9", "name": "Regulatory Compliance (HIPAA / OMH)", "whereUsed": ["company-3"], "whereLearned": "company-3", "order": 9 },
+    { "id": "skill-10", "name": "MDM", "whereUsed": ["company-1"], "whereLearned": "company-1", "order": 10 },
+    { "id": "skill-11", "name": "MFA", "whereUsed": ["company-1"], "whereLearned": "company-1", "order": 11 },
+    { "id": "skill-12", "name": "Google Workspace", "whereUsed": ["company-1", "company-2"], "whereLearned": "company-1", "order": 12 },
+    { "id": "skill-13", "name": "VPN", "whereUsed": ["company-2", "company-4"], "whereLearned": "company-4", "order": 13 }
+  ]
+}

@@ -1,0 +1,102 @@
+<section
+  class="snap-section"
+  [id]="id()"
+  [style.--accent-color]="accentColor()"
+>
+  <!-- Active accent bar - animates when section is active -->
+  <div
+    class="snap-section__accent-bar"
+    [class.snap-section__accent-bar--active]="isActive()"
+  ></div>
+  @if (dateDisplay()) {
+    <span class="snap-section__date">{{ dateDisplay() }}</span>
+  }
+  @if (watermarkTitle()) {
+    <div class="snap-section__watermark">{{ watermarkTitle() }}</div>
+  }
+  <div class="snap-section__inner">
+    <div class="snap-section__left">
+      <div class="snap-section__logo-wrap">
+        @if (logoUrl()) {
+          <img [src]="logoUrl()" [alt]="title()" class="snap-section__logo-img" />
+        } @else {
+          <div class="snap-section__logo-placeholder"></div>
+        }
+      </div>
+      @if (roleTypeLabel()) {
+        <span class="snap-section__role-label">{{ roleTypeLabel() }}</span>
+      }
+    </div>
+    <div class="snap-section__content">
+      @if (title()) {
+        <h2 class="snap-section__title">{{ title() }}</h2>
+      }
+      @if (subtitle()) {
+        <p class="snap-section__subtitle">{{ subtitle() }}</p>
+      }
+      @if (summary()) {
+        <p class="snap-section__summary">{{ summary() }}</p>
+      }
+      @if (keyOutcomes().length) {
+        <div class="snap-section__key-outcomes">
+          <div class="snap-section__key-outcomes-title">Key Outcomes</div>
+          <ul class="snap-section__key-outcomes-list">
+            @for (outcome of keyOutcomes(); track outcome) {
+              <li>{{ outcome }}</li>
+            }
+          </ul>
+        </div>
+      }
+      @if (bullets().length) {
+        <ul class="snap-section__bullets">
+          @for (bullet of bullets(); track bullet) {
+            <li>{{ bullet }}</li>
+          }
+        </ul>
+      }
+      @if (chipsTech().length || chipsPlatforms().length || chipsGovernance().length) {
+        <div class="snap-section__chip-groups">
+          @if (chipsTech().length) {
+            <div class="snap-section__chip-group">
+              <span class="snap-section__chip-group-label">Tech</span>
+              <div class="snap-section__chips">
+                @for (chip of chipsTech(); track chip; let i = $index) {
+                  <span class="snap-section__chip snap-section__chip--tech" [style.animation-delay]="(i * 50) + 'ms'">{{ chip }}</span>
+                }
+              </div>
+            </div>
+          }
+          @if (chipsPlatforms().length) {
+            <div class="snap-section__chip-group">
+              <span class="snap-section__chip-group-label">Platforms</span>
+              <div class="snap-section__chips">
+                @for (chip of chipsPlatforms(); track chip; let i = $index) {
+                  <span class="snap-section__chip snap-section__chip--soft" [style.animation-delay]="(i * 50) + 'ms'">{{ chip }}</span>
+                }
+              </div>
+            </div>
+          }
+          @if (chipsGovernance().length) {
+            <div class="snap-section__chip-group">
+              <span class="snap-section__chip-group-label">Governance / Security</span>
+              <div class="snap-section__chips">
+                @for (chip of chipsGovernance(); track chip; let i = $index) {
+                  <span class="snap-section__chip snap-section__chip--gov" [style.animation-delay]="(i * 50) + 'ms'">{{ chip }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      } @else if (chipsA().length || chipsB().length) {
+        <div class="snap-section__chips">
+          @for (chip of chipsA(); track chip; let i = $index) {
+            <span class="snap-section__chip snap-section__chip--tech" [style.animation-delay]="(i * 50) + 'ms'">{{ chip }}</span>
+          }
+          @for (chip of chipsB(); track chip; let i = $index) {
+            <span class="snap-section__chip snap-section__chip--soft" [style.animation-delay]="((chipsA().length + i) * 50) + 'ms'">{{ chip }}</span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

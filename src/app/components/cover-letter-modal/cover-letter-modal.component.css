@@ -1,0 +1,170 @@
+.cover-letter-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+}
+
+.cover-letter-modal {
+  background: #0f1e2e;
+  border: 1px solid rgba(110, 143, 175, 0.3);
+  border-radius: 8px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.cover-letter-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(110, 143, 175, 0.2);
+}
+
+.cover-letter-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+.cover-letter-modal__close {
+  background: none;
+  border: none;
+  color: #c7d6e5;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.cover-letter-modal__close:hover {
+  color: white;
+}
+
+.cover-letter-modal__tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid rgba(110, 143, 175, 0.2);
+}
+
+.cover-letter-modal__tab {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #c7d6e5;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.cover-letter-modal__tab:hover {
+  color: white;
+}
+
+.cover-letter-modal__tab--active {
+  color: var(--company-primary, #6e8faf);
+  border-bottom-color: var(--company-primary, #6e8faf);
+}
+
+.cover-letter-modal__body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cover-letter-modal__hint {
+  color: #c7d6e5;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.cover-letter-modal__field label {
+  display: block;
+  font-size: 0.9rem;
+  color: #c7d6e5;
+  margin-bottom: 0.35rem;
+}
+
+.cover-letter-modal__field input,
+.cover-letter-modal__field textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  color: white;
+  background: rgba(110, 143, 175, 0.15);
+  border: 1px solid rgba(110, 143, 175, 0.4);
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.cover-letter-modal__field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.cover-letter-modal__field input::placeholder,
+.cover-letter-modal__field textarea::placeholder {
+  color: rgba(199, 214, 229, 0.5);
+}
+
+.cover-letter-modal__btn {
+  padding: 0.6rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.cover-letter-modal__btn--primary {
+  background: var(--company-primary, #6e8faf);
+  color: white;
+}
+
+.cover-letter-modal__btn--primary:hover {
+  opacity: 0.9;
+}
+
+.cover-letter-modal__btn--outline {
+  background: transparent;
+  color: var(--company-primary, #6e8faf);
+  border: 1px solid rgba(110, 143, 175, 0.5);
+}
+
+.cover-letter-modal__btn--outline:hover {
+  background: rgba(110, 143, 175, 0.15);
+}
+
+.cover-letter-modal__match {
+  padding: 1rem;
+  background: rgba(110, 143, 175, 0.1);
+  border-radius: 6px;
+  border-left: 4px solid rgba(110, 143, 175, 0.4);
+}
+
+.cover-letter-modal__score {
+  color: white;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.cover-letter-modal__matched {
+  color: #c7d6e5;
+  font-weight: normal;
+}
+
+.cover-letter-modal__alert {
+  color: #e8b86d;
+  font-size: 0.9rem;
+  margin: 0;
+}

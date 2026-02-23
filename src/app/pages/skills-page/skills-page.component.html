@@ -1,0 +1,53 @@
+<div class="skills-page">
+  <div class="skills-page__search">
+    <input
+      type="text"
+      list="skills-datalist"
+      placeholder="Type to search skills..."
+      class="skills-page__input"
+      [value]="searchQuery()"
+      (input)="onSearchInput($any($event.target).value)"
+    />
+    <datalist id="skills-datalist">
+      @for (skill of skills(); track skill.id) {
+        <option [value]="skill.name"></option>
+      }
+    </datalist>
+  </div>
+
+  <div class="skills-page__details">
+    @for (skill of filteredSkills(); track skill.id) {
+      <section
+        [id]="'skill-' + skill.id"
+        class="skills-page__detail"
+      >
+        <h2 class="skills-page__detail-title">{{ skill.name }}</h2>
+        <dl class="skills-page__detail-list">
+          @if (skill.usedAtCompanies.length) {
+            <div class="skills-page__detail-row">
+              <dt class="skills-page__detail-term">Used at</dt>
+              <dd class="skills-page__detail-value">{{ skill.usedAtCompanies.join(', ') }}</dd>
+            </div>
+          }
+          @if (skill.learnedAtCompany) {
+            <div class="skills-page__detail-row">
+              <dt class="skills-page__detail-term">Learned at</dt>
+              <dd class="skills-page__detail-value">{{ skill.learnedAtCompany }}</dd>
+            </div>
+          }
+          @if (skill.relatedProjects.length) {
+            <div class="skills-page__detail-row">
+              <dt class="skills-page__detail-term">Related projects</dt>
+              <dd class="skills-page__detail-value">
+                @for (proj of skill.relatedProjects; track proj.id) {
+                  <span class="skills-page__project">{{ proj.name }}</span>
+                  @if (!$last) {<span class="skills-page__sep">, </span>}
+                }
+              </dd>
+            </div>
+          }
+        </dl>
+      </section>
+    }
+  </div>
+</div>

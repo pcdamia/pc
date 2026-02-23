@@ -1,0 +1,420 @@
+<div class="admin-page">
+  <div class="admin-page__header">
+    <div>
+      <h1 class="admin-page__title">Admin</h1>
+      <p class="admin-page__subtitle">Private console for managing roles and site content.</p>
+    </div>
+    <div class="admin-page__actions">
+      <a routerLink="/" class="admin-page__link">Home</a>
+      <button
+        type="button"
+        class="admin-page__btn"
+        (click)="auth.signOut()"
+      >
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <div class="admin-page__content">
+    @if (error()) {
+      <p class="admin-page__error">{{ error() }}</p>
+    }
+
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Experiences</h2>
+        @if (!editingId() && !isAdding()) {
+          <button type="button" class="admin-page__btn" (click)="startAdd()">
+            Add Experience
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <p class="admin-page__message">Loading…</p>
+      } @else if (editingId() !== null || isAdding()) {
+        <form class="admin-form" (ngSubmit)="save()">
+          <div class="admin-form__row">
+            <label class="admin-form__label">Company</label>
+            <select
+              class="admin-form__input"
+              [ngModel]="form().companyId"
+              (ngModelChange)="updateForm('companyId', $event)"
+              name="companyId"
+              required
+            >
+              @for (c of companies(); track c.id) {
+                <option [value]="c.id">{{ c.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Title</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="form().title"
+              (ngModelChange)="updateForm('title', $event)"
+              name="title"
+              required
+            />
+          </div>
+          <div class="admin-form__row admin-form__row--inline">
+            <div>
+              <label class="admin-form__label">Start</label>
+              <input
+                type="text"
+                class="admin-form__input"
+                [ngModel]="form().startDate"
+                (ngModelChange)="updateForm('startDate', $event)"
+                name="startDate"
+                placeholder="e.g. Dec 2022"
+              />
+            </div>
+            <div>
+              <label class="admin-form__label">End</label>
+              <input
+                type="text"
+                class="admin-form__input"
+                [ngModel]="form().endDate"
+                (ngModelChange)="updateForm('endDate', $event)"
+                name="endDate"
+                placeholder="e.g. Present"
+              />
+            </div>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Summary</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="form().summary"
+              (ngModelChange)="updateForm('summary', $event)"
+              name="summary"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Impact bullets (one per line)</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="form().impactBulletsText"
+              (ngModelChange)="updateForm('impactBulletsText', $event)"
+              name="impactBulletsText"
+              rows="5"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Technologies (comma-separated)</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="form().technologiesText"
+              (ngModelChange)="updateForm('technologiesText', $event)"
+              name="technologiesText"
+              placeholder="e.g. MacOS, Google Workspace, MDM"
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Order</label>
+            <input
+              type="number"
+              class="admin-form__input admin-form__input--narrow"
+              [ngModel]="form().order"
+              (ngModelChange)="updateForm('order', $event)"
+              name="order"
+              min="1"
+            />
+          </div>
+          <div class="admin-form__actions">
+            <button type="submit" class="admin-page__btn" [disabled]="loading()">
+              Save
+            </button>
+            <button type="button" class="admin-page__btn" (click)="cancelEdit()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="admin-list">
+          @for (exp of experiences(); track exp.id) {
+            <div class="admin-list__item">
+              <div class="admin-list__main">
+                <span class="admin-list__title">{{ exp.title }}</span>
+                <span class="admin-list__meta">
+                  {{ companyMap().get(exp.companyId)?.name ?? exp.companyId }} · {{ exp.startDate }} – {{ exp.endDate }}
+                </span>
+              </div>
+              <div class="admin-list__actions">
+                <button type="button" class="admin-page__btn admin-page__btn--sm" (click)="startEdit(exp)">
+                  Edit
+                </button>
+                <button type="button" class="admin-page__btn admin-page__btn--sm admin-page__btn--danger" (click)="deleteExperience(exp)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          }
+          @empty {
+            <p class="admin-page__message">No experiences yet. Add one to get started.</p>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Projects</h2>
+        @if (!editingProjId() && !isAddingProj()) {
+          <button type="button" class="admin-page__btn" (click)="startAddProj()">
+            Add Project
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <p class="admin-page__message">Loading…</p>
+      } @else if (editingProjId() !== null || isAddingProj()) {
+        <form class="admin-form" (ngSubmit)="saveProj()">
+          <div class="admin-form__row">
+            <label class="admin-form__label">Company</label>
+            <select
+              class="admin-form__input"
+              [ngModel]="formProj().companyId"
+              (ngModelChange)="updateFormProj('companyId', $event)"
+              name="companyId"
+            >
+              <option [ngValue]="null">— None —</option>
+              @for (c of companies(); track c.id) {
+                <option [ngValue]="c.id">{{ c.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Name</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="formProj().name"
+              (ngModelChange)="updateFormProj('name', $event)"
+              name="name"
+              required
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Problem</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="formProj().problem"
+              (ngModelChange)="updateFormProj('problem', $event)"
+              name="problem"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Intervention</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="formProj().intervention"
+              (ngModelChange)="updateFormProj('intervention', $event)"
+              name="intervention"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Architecture</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="formProj().architecture"
+              (ngModelChange)="updateFormProj('architecture', $event)"
+              name="architecture"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Outcome</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="formProj().outcome"
+              (ngModelChange)="updateFormProj('outcome', $event)"
+              name="outcome"
+              rows="2"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Outcome bullets (one per line)</label>
+            <textarea
+              class="admin-form__input admin-form__textarea"
+              [ngModel]="formProj().outcomeBulletsText"
+              (ngModelChange)="updateFormProj('outcomeBulletsText', $event)"
+              name="outcomeBulletsText"
+              rows="4"
+            ></textarea>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Stakeholders (comma-separated)</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="formProj().stakeholdersText"
+              (ngModelChange)="updateFormProj('stakeholdersText', $event)"
+              name="stakeholdersText"
+              placeholder="e.g. CEO, Operations, Finance"
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Technologies (comma-separated)</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="formProj().technologiesText"
+              (ngModelChange)="updateFormProj('technologiesText', $event)"
+              name="technologiesText"
+              placeholder="e.g. MacOS, MDM, MFA"
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Order</label>
+            <input
+              type="number"
+              class="admin-form__input admin-form__input--narrow"
+              [ngModel]="formProj().order"
+              (ngModelChange)="updateFormProj('order', $event)"
+              name="order"
+              min="1"
+            />
+          </div>
+          <div class="admin-form__actions">
+            <button type="submit" class="admin-page__btn" [disabled]="loading()">
+              Save
+            </button>
+            <button type="button" class="admin-page__btn" (click)="cancelEditProj()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="admin-list">
+          @for (proj of projects(); track proj.id) {
+            <div class="admin-list__item">
+              <div class="admin-list__main">
+                <span class="admin-list__title">{{ proj.name }}</span>
+                <span class="admin-list__meta">
+                  {{ proj.companyId ? (companyMap().get(proj.companyId)?.name ?? proj.companyId) : '—' }}
+                </span>
+              </div>
+              <div class="admin-list__actions">
+                <button type="button" class="admin-page__btn admin-page__btn--sm" (click)="startEditProj(proj)">
+                  Edit
+                </button>
+                <button type="button" class="admin-page__btn admin-page__btn--sm admin-page__btn--danger" (click)="deleteProject(proj)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          }
+          @empty {
+            <p class="admin-page__message">No projects yet. Add one to get started.</p>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Skills</h2>
+        @if (!editingSkillId() && !isAddingSkill()) {
+          <button type="button" class="admin-page__btn" (click)="startAddSkill()">
+            Add Skill
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <p class="admin-page__message">Loading…</p>
+      } @else if (editingSkillId() !== null || isAddingSkill()) {
+        <form class="admin-form" (ngSubmit)="saveSkill()">
+          <div class="admin-form__row">
+            <label class="admin-form__label">Name</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="formSkill().name"
+              (ngModelChange)="updateFormSkill('name', $event)"
+              name="name"
+              required
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Where used (comma-separated company IDs)</label>
+            <input
+              type="text"
+              class="admin-form__input"
+              [ngModel]="formSkill().whereUsedText"
+              (ngModelChange)="updateFormSkill('whereUsedText', $event)"
+              name="whereUsedText"
+              placeholder="e.g. company-1, company-2, company-3"
+            />
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Where learned (company ID)</label>
+            <select
+              class="admin-form__input"
+              [ngModel]="formSkill().whereLearned"
+              (ngModelChange)="updateFormSkill('whereLearned', $event)"
+              name="whereLearned"
+            >
+              <option value="">— None —</option>
+              @for (c of companies(); track c.id) {
+                <option [value]="c.id">{{ c.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="admin-form__row">
+            <label class="admin-form__label">Order</label>
+            <input
+              type="number"
+              class="admin-form__input admin-form__input--narrow"
+              [ngModel]="formSkill().order"
+              (ngModelChange)="updateFormSkill('order', $event)"
+              name="order"
+              min="1"
+            />
+          </div>
+          <div class="admin-form__actions">
+            <button type="submit" class="admin-page__btn" [disabled]="loading()">
+              Save
+            </button>
+            <button type="button" class="admin-page__btn" (click)="cancelEditSkill()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="admin-list">
+          @for (skill of skills(); track skill.id) {
+            <div class="admin-list__item">
+              <div class="admin-list__main">
+                <span class="admin-list__title">{{ skill.name }}</span>
+                <span class="admin-list__meta">
+                  Used at {{ (skill.whereUsed ?? []).length }} companies · Learned at {{ skill.whereLearned ? (companyMap().get(skill.whereLearned)?.name ?? skill.whereLearned) : '—' }}
+                </span>
+              </div>
+              <div class="admin-list__actions">
+                <button type="button" class="admin-page__btn admin-page__btn--sm" (click)="startEditSkill(skill)">
+                  Edit
+                </button>
+                <button type="button" class="admin-page__btn admin-page__btn--sm admin-page__btn--danger" (click)="deleteSkill(skill)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          }
+          @empty {
+            <p class="admin-page__message">No skills yet. Add one to get started.</p>
+          }
+        </div>
+      }
+    </section>
+  </div>
+</div>

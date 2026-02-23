@@ -1,0 +1,91 @@
+<div
+  class="cover-letter-modal__backdrop"
+  (click)="onBackdropClick($event)"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cover-letter-title"
+>
+  <div class="cover-letter-modal">
+    <div class="cover-letter-modal__header">
+      <h2 id="cover-letter-title" class="cover-letter-modal__title">Cover Letter Generator</h2>
+      <button type="button" class="cover-letter-modal__close" (click)="close()" aria-label="Close">
+        ×
+      </button>
+    </div>
+
+    <div class="cover-letter-modal__tabs">
+      <button
+        type="button"
+        class="cover-letter-modal__tab"
+        [class.cover-letter-modal__tab--active]="mode() === 'basic'"
+        (click)="setMode('basic')"
+      >
+        Basic
+      </button>
+      <button
+        type="button"
+        class="cover-letter-modal__tab"
+        [class.cover-letter-modal__tab--active]="mode() === 'advanced'"
+        (click)="setMode('advanced')"
+      >
+        Advanced
+      </button>
+    </div>
+
+    @if (mode() === 'basic') {
+      <div class="cover-letter-modal__body">
+        <p class="cover-letter-modal__hint">Download a generic cover letter template.</p>
+        <button type="button" class="cover-letter-modal__btn cover-letter-modal__btn--primary" (click)="downloadBasic()">
+          Download Cover Letter
+        </button>
+      </div>
+    } @else {
+      <div class="cover-letter-modal__body">
+        <div class="cover-letter-modal__field">
+          <label for="job-title">Job Title</label>
+          <input
+            id="job-title"
+            type="text"
+            placeholder="e.g. VP of Engineering"
+            [value]="jobTitle()"
+            (input)="jobTitle.set($any($event.target).value)"
+          />
+        </div>
+        <div class="cover-letter-modal__field">
+          <label for="job-desc">Job Description</label>
+          <textarea
+            id="job-desc"
+            placeholder="Paste the job description here..."
+            rows="5"
+            [value]="jobDescription()"
+            (input)="jobDescription.set($any($event.target).value)"
+          ></textarea>
+        </div>
+
+        <button type="button" class="cover-letter-modal__btn cover-letter-modal__btn--outline" (click)="checkMatch()">
+          Check Keyword Match
+        </button>
+
+        @if (matchResult(); as result) {
+          <div class="cover-letter-modal__match">
+            <p class="cover-letter-modal__score">
+              Match score: {{ (result.score * 100) | number:'1.0-0' }}%
+              @if (result.matchedSkills.length) {
+                <span class="cover-letter-modal__matched">({{ result.matchedSkills.length }} skills matched)</span>
+              }
+            </p>
+            @if (showLowMatchAlert()) {
+              <div class="cover-letter-modal__alert">
+                Low keyword match. Consider tailoring your cover letter or highlighting relevant experience. You can still download.
+              </div>
+            }
+          </div>
+        }
+
+        <button type="button" class="cover-letter-modal__btn cover-letter-modal__btn--primary" (click)="downloadAdvanced()">
+          Download Cover Letter
+        </button>
+      </div>
+    }
+  </div>
+</div>

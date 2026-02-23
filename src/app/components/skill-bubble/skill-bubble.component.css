@@ -1,0 +1,20 @@
+.skill-bubble {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 9999px;
+  background: rgba(110, 143, 175, 0.25);
+  color: var(--company-primary, #6e8faf);
+  border: 1px solid rgba(110, 143, 175, 0.4);
+  transition: transform 200ms ease;
+  cursor: default;
+}
+
+.skill-bubble:hover {
+  transform: translateY(-2px);
+}
+
+.skill-bubble--link {
+  text-decoration: none;
+  cursor: pointer;
+}

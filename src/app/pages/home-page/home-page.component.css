@@ -1,0 +1,255 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 3rem 2rem 3rem 4rem;
+  color: white;
+  overflow: hidden;
+}
+
+/* Systems map backdrop */
+.hero__systems-map {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  color: #6e8faf;
+}
+
+.hero__systems-map svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1400px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero__headshot-wrap {
+    order: -1;
+  }
+
+  .hero {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.hero__content {
+  text-align: left;
+}
+
+.hero__headshot-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.hero__headshot-frame {
+  position: relative;
+  padding: 0.5rem;
+  border: 1px solid rgba(110, 143, 175, 0.3);
+  border-radius: 50%;
+  transition: transform 150ms ease-out;
+}
+
+.hero__headshot-frame:hover {
+  transform: translateY(-2px);
+}
+
+.hero__headshot {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hero__headshot-wrap {
+    justify-content: center;
+  }
+
+  .hero__headshot {
+    width: 12.6rem;
+    height: 12.6rem;
+  }
+}
+
+.hero__name {
+  font-family: var(--font-family-title);
+  font-size: 3.5rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+  color: white;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .hero__name {
+    font-size: 4.5rem;
+  }
+}
+
+.hero__title {
+  font-family: var(--font-family-title);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 0 0 2rem;
+  color: #6e8faf;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    font-size: 1.75rem;
+  }
+}
+
+.hero__description-card {
+  max-width: 38rem;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.hero__statement {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: rgba(199, 214, 229, 0.88);
+  margin: 0 0 0.5rem;
+}
+
+.hero__summary {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: rgba(199, 214, 229, 0.88);
+  margin: 0;
+}
+
+.hero__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.hero__metric {
+  text-align: left;
+}
+
+.hero__metric-value {
+  font-family: var(--font-family-title);
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #6e8faf;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .hero__metric-value {
+    font-size: 3rem;
+  }
+}
+
+.hero__metric-label {
+  font-size: 0.8125rem;
+  color: rgba(199, 214, 229, 0.8);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hero__btn {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: inherit;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.hero__btn::after {
+  content: "";
+  position: absolute;
+  left: 1.35rem;
+  right: 1.35rem;
+  bottom: 0.5rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.hero__btn:hover::after {
+  transform: scaleX(1);
+}
+
+.hero__btn:active {
+  transform: scale(0.98);
+}
+
+.hero__btn--outline {
+  border: 1px solid #6e8faf;
+  color: #6e8faf;
+  background: transparent;
+}
+
+.hero__btn--outline:hover {
+  background: #6e8faf;
+  color: #0f1e2e;
+}
+
+.hero__btn--outline:hover::after {
+  background: #0f1e2e;
+}
+
+.hero__btn--primary {
+  background: #6e8faf;
+  color: #0f1e2e;
+  border: none;
+}
+
+.hero__btn--primary:hover {
+  opacity: 0.95;
+}
+
+.hero__btn--primary::after {
+  left: 1.35rem;
+  right: 1.35rem;
+  background: #0f1e2e;
+}

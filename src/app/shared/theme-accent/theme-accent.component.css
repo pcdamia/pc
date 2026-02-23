@@ -1,0 +1,16 @@
+.theme-accent-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  z-index: 100;
+  transition: background-color 300ms ease;
+  transform-origin: left;
+  animation: accent-bar-grow 400ms ease-out forwards;
+}
+
+@keyframes accent-bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

@@ -1,0 +1,44 @@
+<div class="projects-page">
+  <div #scrollContainer class="projects-scroll">
+  @for (proj of projects(); track proj.id) {
+    <div
+      [attr.data-section-id]="proj.id"
+      [attr.data-primary-color]="proj.company?.primaryColor ?? '#6e8faf'"
+      [class.projects-section--active]="activeSectionId() === proj.id"
+    >
+      <app-snap-section
+        [id]="proj.id"
+        [isActive]="activeSectionId() === proj.id"
+        [logoUrl]="proj.resolvedLogoUrl"
+        [title]="proj.name"
+        [subtitle]="proj.company?.name ?? 'Key project'"
+        [summary]="getProjectSummary(proj)"
+        [bullets]="getProjectBullets(proj)"
+        [chipsA]="proj.technologies ?? []"
+        [chipsB]="proj.stakeholders"
+        [accentColor]="proj.company?.primaryColor ?? '#6e8faf'"
+        [watermarkTitle]="proj.name.toUpperCase()"
+      />
+    </div>
+  }
+  @empty {
+    <div class="flex items-center justify-center min-h-[50vh] text-[#c7d6e5] px-6">
+      <p>No project data yet. Add projects to Firestore.</p>
+    </div>
+  }
+  </div>
+  @if (projects().length > 1) {
+    <nav class="snap-indicator" aria-label="Section navigation">
+      @for (proj of projects(); track proj.id) {
+        <button
+          type="button"
+          class="snap-indicator__dot"
+          [class.snap-indicator__dot--active]="activeSectionId() === proj.id"
+          [attr.aria-current]="activeSectionId() === proj.id ? 'true' : null"
+          [attr.aria-label]="'Go to ' + proj.name"
+          (click)="scrollToSection(proj.id)"
+        ></button>
+      }
+    </nav>
+  }
+</div>

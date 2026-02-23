@@ -1,1 +1,110 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0f1e2e;
+  --color-accent: #6e8faf;
+  --color-muted: #c7d6e5;
+  --font-family-title: "Bruno Ace SC", sans-serif;
+  --font-family-body: Inter, system-ui, sans-serif;
+}
+
+:root {
+  --bg-primary: #0F1E2E;
+  --text-white: #ffffff;
+  --text-muted: #c7d6e5;
+  --company-primary: #6e8faf;
+  --company-secondary: #c7d6e5;
+  --font-family-title: "Bruno Ace SC", sans-serif;
+  --font-family-body: Inter, system-ui, sans-serif;
+}
+
+/* Soft Vignette */
+html {
+  scroll-behavior: smooth;
+  background: radial-gradient(
+    circle at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+/* Base Background */
+body {
+  font-family: var(--font-family-body);
+  background-color: var(--bg-primary);
+  color: white;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Radial Depth Layer */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(110, 143, 175, 0.08),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Subtle Grid Texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Left spine line - signature visual */
+.layout-spine {
+  position: fixed;
+  left: 2.5rem;
+  top: 0;
+  bottom: 0;
+  /* width: 1px; */
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(255, 255, 255, 0.1) 90%,
+    transparent
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Subtle gradient beam behind spine */
+.layout-spine-beam {
+  position: fixed;
+  left: 2.5rem;
+  top: 0;
+  bottom: 0;
+  width: 6rem;
+  transform: translateX(-3rem);
+  background: linear-gradient(
+    to right,
+    rgba(110, 143, 175, 0.15),
+    transparent
+  );
+  filter: blur(24px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .layout-spine,
+  .layout-spine-beam {
+    display: none;
+  }
+}

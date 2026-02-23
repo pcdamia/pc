@@ -1,0 +1,71 @@
+.sign-in-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.sign-in-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.sign-in-overlay__panel {
+  position: relative;
+  background: rgba(15, 30, 46, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 2rem;
+  min-width: 280px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.sign-in-overlay__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.sign-in-overlay__close:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sign-in-overlay__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.sign-in-overlay__btn {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: white;
+  background: rgba(110, 143, 175, 0.35);
+  border: 1px solid rgba(110, 143, 175, 0.6);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.sign-in-overlay__btn:hover {
+  background: rgba(110, 143, 175, 0.5);
+  border-color: rgba(110, 143, 175, 0.8);
+}

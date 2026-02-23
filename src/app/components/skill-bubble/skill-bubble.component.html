@@ -1,0 +1,7 @@
+@if (anchorId()) {
+  <a href="/skills#{{ anchorId() }}" class="skill-bubble skill-bubble--link" (click)="handleClick($event)">
+    {{ skillName() }}
+  </a>
+} @else {
+  <span class="skill-bubble">{{ skillName() }}</span>
+}

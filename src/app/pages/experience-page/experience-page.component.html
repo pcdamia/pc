@@ -1,0 +1,48 @@
+<div class="experience-page">
+  <div #scrollContainer class="experience-scroll">
+  @for (exp of experiences(); track exp.id) {
+    <div
+      [attr.data-section-id]="exp.id"
+      [attr.data-primary-color]="exp.company.primaryColor ?? '#6e8faf'"
+      [class.experience-section--active]="activeSectionId() === exp.id"
+    >
+      <app-snap-section
+        [id]="exp.id"
+        [isActive]="activeSectionId() === exp.id"
+        [logoUrl]="exp.resolvedLogoUrl"
+        [title]="exp.title"
+        [subtitle]="exp.company.name"
+        [summary]="exp.summary"
+        [bullets]="getRemainingBullets(exp.impactBullets, getKeyOutcomes(exp.impactBullets))"
+        [keyOutcomes]="getKeyOutcomes(exp.impactBullets)"
+        [roleTypeLabel]="'Leadership'"
+        [chipsTech]="categorizeChips(exp.technologies ?? []).tech"
+        [chipsPlatforms]="categorizeChips(exp.technologies ?? []).platforms"
+        [chipsGovernance]="categorizeChips(exp.technologies ?? []).governance"
+        [accentColor]="exp.company.primaryColor ?? '#6e8faf'"
+        [dateDisplay]="formatEmploymentDate(exp.startDate, exp.endDate)"
+        [watermarkTitle]="exp.company.name.toUpperCase()"
+      />
+    </div>
+  }
+  @empty {
+    <div class="flex items-center justify-center min-h-[50vh] text-[#c7d6e5] px-6">
+      <p>No experience data yet. Add companies and experiences to Firestore.</p>
+    </div>
+  }
+  </div>
+  @if (experiences().length > 1) {
+    <nav class="snap-indicator" aria-label="Section navigation">
+      @for (exp of experiences(); track exp.id; let i = $index) {
+        <button
+          type="button"
+          class="snap-indicator__dot"
+          [class.snap-indicator__dot--active]="activeSectionId() === exp.id"
+          [attr.aria-current]="activeSectionId() === exp.id ? 'true' : null"
+          [attr.aria-label]="'Go to ' + exp.title"
+          (click)="scrollToSection(exp.id)"
+        ></button>
+      }
+    </nav>
+  }
+</div>

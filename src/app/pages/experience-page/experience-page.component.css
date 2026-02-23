@@ -1,0 +1,57 @@
+.experience-page {
+  position: relative;
+}
+
+.experience-scroll {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.experience-section--active .snap-section {
+  transform: scale(1.01);
+  transition: transform 300ms ease;
+}
+
+.snap-indicator {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 40;
+}
+
+.snap-indicator__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(199, 214, 229, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.snap-indicator__dot:hover {
+  background: rgba(199, 214, 229, 0.6);
+}
+
+.snap-indicator__dot--active {
+  background: var(--company-primary, #6e8faf);
+  transform: scale(1.25);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
