@@ -40,6 +40,7 @@ export class LayoutComponent implements OnInit {
       this.cvUrl.set(cv);
       this.resumeUrl.set(resume);
     } catch {
+      // Fallback path - served by /documents/** rewrite if PDF exists in Storage
       const fallback = '/documents/Paul_Crews_Jr_Executive_Resume_Final.pdf';
       this.cvUrl.set(fallback);
       this.resumeUrl.set(fallback);

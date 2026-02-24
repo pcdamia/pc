@@ -34,6 +34,7 @@ export class HomePageComponent implements OnInit {
       }
     } catch (err) {
       console.error('Failed to fetch home data:', err);
+      this.siteConfig.set({ ...DEFAULT_SITE_CONFIG, headshotUrl: undefined });
     }
   }
 }

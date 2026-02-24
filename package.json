@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "deploy": "bash scripts/deploy.sh",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "seed": "node scripts/seed-firestore.mjs"

@@ -1,15 +1,7 @@
-import { Injectable } from '@angular/core';
-import {
-  collection,
-  doc,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  Firestore,
-} from 'firebase/firestore';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { FirebaseService } from './firebase.service';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from './auth.service';
 import type { Company, Experience, Project, Skill, SiteConfig } from '../models';
 
 export interface ExperienceWithCompany extends Experience {
@@ -30,128 +22,121 @@ export interface SkillWithJoins extends Skill {
 
 @Injectable({ providedIn: 'root' })
 export class RepoService {
-  constructor(private firebase: FirebaseService) {}
+  private http = inject(HttpClient);
+  private auth = inject(AuthService);
 
-  private get db(): Firestore {
-    return this.firebase.db;
+  private async authHeaders(): Promise<Record<string, string>> {
+    const user = this.auth.user;
+    if (!user) return {};
+    const token = await user.getIdToken();
+    return { Authorization: `Bearer ${token}` };
   }
 
   async getCompanies(): Promise<Company[]> {
-    const snapshot = await getDocs(collection(this.db, 'companies'));
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Company));
+    return firstValueFrom(this.http.get<Company[]>('/api/companies'));
   }
 
   async getExperiences(): Promise<Experience[]> {
-    const snapshot = await getDocs(collection(this.db, 'experiences'));
-    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Experience));
+    return firstValueFrom(this.http.get<Experience[]>('/api/experiences'));
   }
 
   async addExperience(data: Omit<Experience, 'id'>): Promise<string> {
-    const ref = await addDoc(collection(this.db, 'experiences'), {
-      companyId: data.companyId,
-      title: data.title,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      summary: data.summary,
-      impactBullets: data.impactBullets ?? [],
-      technologies: data.technologies ?? [],
-      order: data.order,
-    });
-    return ref.id;
+    const headers = await this.authHeaders();
+    const res = await firstValueFrom(
+      this.http.post<{ id: string }>('/api/experiences', data, { headers })
+    );
+    return res.id;
   }
 
   async updateExperience(id: string, data: Partial<Omit<Experience, 'id'>>): Promise<void> {
-    const ref = doc(this.db, 'experiences', id);
-    await updateDoc(ref, data as Record<string, unknown>);
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.patch(`/api/experiences/${id}`, data, { headers }));
   }
 
   async deleteExperience(id: string): Promise<void> {
-    await deleteDoc(doc(this.db, 'experiences', id));
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.delete(`/api/experiences/${id}`, { headers }));
   }
 
   async getProjects(): Promise<Project[]> {
-    const snapshot = await getDocs(collection(this.db, 'projects'));
-    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Project));
+    return firstValueFrom(this.http.get<Project[]>('/api/projects'));
   }
 
   async addProject(data: Omit<Project, 'id'>): Promise<string> {
-    const ref = await addDoc(collection(this.db, 'projects'), {
-      name: data.name,
-      companyId: data.companyId ?? null,
-      problem: data.problem ?? '',
-      intervention: data.intervention ?? '',
-      architecture: data.architecture ?? '',
-      outcome: data.outcome ?? '',
-      outcomeBullets: data.outcomeBullets ?? [],
-      stakeholders: data.stakeholders ?? [],
-      technologies: data.technologies ?? [],
-      order: data.order,
-    });
-    return ref.id;
+    const headers = await this.authHeaders();
+    const res = await firstValueFrom(
+      this.http.post<{ id: string }>('/api/projects', data, { headers })
+    );
+    return res.id;
   }
 
   async updateProject(id: string, data: Partial<Omit<Project, 'id'>>): Promise<void> {
-    const ref = doc(this.db, 'projects', id);
-    await updateDoc(ref, data as Record<string, unknown>);
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.patch(`/api/projects/${id}`, data, { headers }));
   }
 
   async deleteProject(id: string): Promise<void> {
-    await deleteDoc(doc(this.db, 'projects', id));
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.delete(`/api/projects/${id}`, { headers }));
   }
 
   async getSkills(): Promise<Skill[]> {
-    const snapshot = await getDocs(collection(this.db, 'skills'));
-    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as Skill));
+    return firstValueFrom(this.http.get<Skill[]>('/api/skills'));
   }
 
   async addSkill(data: Omit<Skill, 'id'>): Promise<string> {
-    const ref = await addDoc(collection(this.db, 'skills'), {
-      name: data.name,
-      whereUsed: data.whereUsed ?? [],
-      whereLearned: data.whereLearned ?? null,
-      order: data.order ?? 0,
-    });
-    return ref.id;
+    const headers = await this.authHeaders();
+    const res = await firstValueFrom(
+      this.http.post<{ id: string }>('/api/skills', data, { headers })
+    );
+    return res.id;
   }
 
   async updateSkill(id: string, data: Partial<Omit<Skill, 'id'>>): Promise<void> {
-    const ref = doc(this.db, 'skills', id);
-    await updateDoc(ref, data as Record<string, unknown>);
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.patch(`/api/skills/${id}`, data, { headers }));
   }
 
   async deleteSkill(id: string): Promise<void> {
-    await deleteDoc(doc(this.db, 'skills', id));
+    const headers = await this.authHeaders();
+    await firstValueFrom(this.http.delete(`/api/skills/${id}`, { headers }));
   }
 
   async getSiteConfig(): Promise<SiteConfig | null> {
-    const snapshot = await getDocs(collection(this.db, 'siteConfig'));
-    const doc = snapshot.docs[0];
-    if (!doc) return null;
-    const config = { id: doc.id, ...doc.data() } as SiteConfig;
-    if (config.headshotUrl) {
-      config.headshotUrl = await this.resolveHeadshotUrl(config.headshotUrl);
-    }
-    return config;
-  }
-
-  async resolveHeadshotUrl(headshotUrl: string): Promise<string> {
-    if (headshotUrl.startsWith('http://') || headshotUrl.startsWith('https://')) {
-      return headshotUrl;
-    }
-    if (headshotUrl.startsWith('/') || headshotUrl.startsWith('assets/')) {
-      return headshotUrl.startsWith('/') ? headshotUrl : `/${headshotUrl}`;
-    }
-    return getDownloadURL(ref(this.firebase.storage, headshotUrl));
+    return firstValueFrom(this.http.get<SiteConfig | null>('/api/site-config'));
   }
 
   async getCvDownloadUrl(): Promise<string> {
-    const path = 'documents/Paul_Crews_Jr_Executive_Resume_Final.pdf';
-    return getDownloadURL(ref(this.firebase.storage, path));
+    const res = await firstValueFrom(this.http.get<{ url: string }>('/api/cv-url'));
+    return res.url;
   }
 
   async getResumeDownloadUrl(): Promise<string> {
-    const path = 'documents/Paul_Crews_Jr_Executive_Resume_Final.pdf';
-    return getDownloadURL(ref(this.firebase.storage, path));
+    const res = await firstValueFrom(this.http.get<{ url: string }>('/api/resume-url'));
+    return res.url;
+  }
+
+  async resolveHeadshotUrl(headshotUrl: string): Promise<string> {
+    if (headshotUrl.startsWith('http://') || headshotUrl.startsWith('https://')) return headshotUrl;
+    if (headshotUrl.startsWith('/') || headshotUrl.startsWith('assets/')) {
+      return headshotUrl.startsWith('/') ? headshotUrl : `/${headshotUrl}`;
+    }
+    const res = await firstValueFrom(
+      this.http.get<{ url: string }>('/api/resolve-storage-url', { params: { path: headshotUrl } })
+    );
+    return res.url;
+  }
+
+  private async resolveLogoUrl(logoUrl: string): Promise<string> {
+    if (logoUrl.startsWith('http://') || logoUrl.startsWith('https://')) return logoUrl;
+    if (logoUrl.startsWith('/') || logoUrl.startsWith('assets/')) {
+      return logoUrl.startsWith('/') ? logoUrl : `/${logoUrl}`;
+    }
+    const path = logoUrl.startsWith('logos/') ? logoUrl : `logos/${logoUrl}`;
+    const res = await firstValueFrom(
+      this.http.get<{ url: string }>('/api/logo-url', { params: { path } })
+    );
+    return res.url;
   }
 
   async getExperiencesWithCompanies(): Promise<ExperienceWithCompany[]> {
@@ -172,11 +157,7 @@ export class RepoService {
         resolvedLogoUrl = await this.resolveLogoUrl(company.logoUrl);
       }
 
-      result.push({
-        ...exp,
-        company,
-        resolvedLogoUrl,
-      });
+      result.push({ ...exp, company, resolvedLogoUrl });
     }
     return result;
   }
@@ -196,12 +177,7 @@ export class RepoService {
       if (company?.logoUrl) {
         resolvedLogoUrl = await this.resolveLogoUrl(company.logoUrl);
       }
-
-      result.push({
-        ...proj,
-        company,
-        resolvedLogoUrl,
-      });
+      result.push({ ...proj, company, resolvedLogoUrl });
     }
     return result;
   }
@@ -215,43 +191,20 @@ export class RepoService {
     const companyMap = new Map(companies.map((c) => [c.id, c]));
     const sorted = [...skills].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-    const result: SkillWithJoins[] = [];
-    for (const skill of sorted) {
+    return sorted.map((skill) => {
       const usedAtCompanies = (skill.whereUsed ?? [])
         .map((id) => companyMap.get(id)?.name)
         .filter((n): n is string => !!n);
-
       const learnedAtCompany = skill.whereLearned
         ? companyMap.get(skill.whereLearned)?.name ?? skill.whereLearned
         : undefined;
-
       const relatedProjects = projects
-        .filter(
-          (p) =>
-            p.technologies?.some(
-              (t) => t.toLowerCase() === skill.name.toLowerCase()
-            )
+        .filter((p) =>
+          p.technologies?.some((t) => t.toLowerCase() === skill.name.toLowerCase())
         )
         .map((p) => ({ id: p.id, name: p.name }));
 
-      result.push({
-        ...skill,
-        usedAtCompanies,
-        learnedAtCompany,
-        relatedProjects,
-      });
-    }
-    return result;
-  }
-
-  private async resolveLogoUrl(logoUrl: string): Promise<string> {
-    if (logoUrl.startsWith('http://') || logoUrl.startsWith('https://')) {
-      return logoUrl;
-    }
-    if (logoUrl.startsWith('/') || logoUrl.startsWith('assets/')) {
-      return logoUrl.startsWith('/') ? logoUrl : `/${logoUrl}`;
-    }
-    const path = logoUrl.startsWith('logos/') ? logoUrl : `logos/${logoUrl}`;
-    return getDownloadURL(ref(this.firebase.storage, path));
+      return { ...skill, usedAtCompanies, learnedAtCompany, relatedProjects };
+    });
   }
 }

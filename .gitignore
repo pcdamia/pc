@@ -8,6 +8,8 @@
 
 # Node
 /node_modules
+functions/node_modules
+functions/lib
 npm-debug.log
 yarn-error.log
 
@@ -43,8 +45,19 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+
 # Firebase service account (never commit)
 serviceAccountKey.json
 *-credentials.json
 .env
 .env.*
+
+# Environment and config (contain keys - create from .example files)
+src/environments/environment.ts
+src/environments/environment.prod.ts
+public/config.json
+functions/.env

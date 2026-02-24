@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://localhost:5001/portfolious-20286/us-central1",
+    "secure": false
+  }
+}
