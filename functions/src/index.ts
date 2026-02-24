@@ -82,7 +82,8 @@ app.get('/api/config', (req, res) => {
       error: 'Firebase config not set. Set APP_API_KEY etc. in functions/.env or Google Cloud Console.',
     });
   }
-  res.json({ firebase: config });
+  const recaptchaSiteKey = process.env.APP_RECAPTCHA_SITE_KEY ?? '';
+  res.json({ firebase: config, recaptchaSiteKey });
 });
 
 async function resolveStorageUrl(path: string): Promise<string> {
@@ -167,8 +168,9 @@ app.get('/api/site-config', async (req, res) => {
       }
     }
     res.json(config);
-  } catch (e) {
-    res.status(500).json({ error: String(e) });
+  } catch {
+    // Firestore permission or other error - return null so app can use defaults
+    res.json(null);
   }
 });
 

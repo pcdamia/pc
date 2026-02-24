@@ -28,13 +28,20 @@ export class HomePageComponent implements OnInit {
       } else {
         const defaultConfig = { ...DEFAULT_SITE_CONFIG };
         if (defaultConfig.headshotUrl?.startsWith('hs/')) {
-          defaultConfig.headshotUrl = await this.repo.resolveHeadshotUrl(defaultConfig.headshotUrl);
+          try {
+            defaultConfig.headshotUrl = await this.repo.resolveHeadshotUrl(defaultConfig.headshotUrl);
+          } catch {
+            // Use /hs/ path so proxy can serve from API; 404 if file missing in Storage
+            defaultConfig.headshotUrl = '/' + defaultConfig.headshotUrl;
+          }
           this.siteConfig.set(defaultConfig);
         }
       }
     } catch (err) {
       console.error('Failed to fetch home data:', err);
-      this.siteConfig.set({ ...DEFAULT_SITE_CONFIG, headshotUrl: undefined });
+      const fallback = { ...DEFAULT_SITE_CONFIG };
+      fallback.headshotUrl = '/hs/me_headshot.png';
+      this.siteConfig.set(fallback);
     }
   }
 }

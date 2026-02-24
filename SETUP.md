@@ -38,7 +38,9 @@ npx firebase emulators:start --only functions
 npm start
 ```
 
-The Angular dev server proxies `/api` to the functions emulator.
+The Angular dev server proxies `/api`, `/hs`, and `/documents` to the functions emulator. **The emulator must be running** for API calls, headshots, and documents to work.
+
+**Optional – dev without emulator:** Copy `public/config.json.example` to `public/config.json` and fill in your Firebase config. The app will load, but API calls (site-config, resume, etc.) will still 404 until the emulator runs.
 
 ## 3. Deploy to Firebase
 

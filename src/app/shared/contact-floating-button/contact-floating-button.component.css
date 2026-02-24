@@ -1,0 +1,81 @@
+.contact-floating {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+}
+
+.contact-floating__trigger-wrap {
+  position: relative;
+}
+
+.contact-floating__backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: -1;
+}
+
+.contact-floating__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--company-primary, #6e8faf);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contact-floating__btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.contact-floating__dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: var(--bg-primary, #0f1e2e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.contact-floating__option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text-white, #fff);
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+
+.contact-floating__option:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-floating__icon {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.contact-floating__icon--linkedin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

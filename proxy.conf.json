@@ -1,6 +1,17 @@
 {
   "/api": {
-    "target": "http://localhost:5001/portfolious-20286/us-central1",
-    "secure": false
+    "target": "http://127.0.0.1:5001/portfolious-20286/us-central1/api",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/hs": {
+    "target": "http://127.0.0.1:5001/portfolious-20286/us-central1/api",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/documents": {
+    "target": "http://127.0.0.1:5001/portfolious-20286/us-central1/api",
+    "secure": false,
+    "changeOrigin": true
   }
 }
